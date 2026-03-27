@@ -7,18 +7,18 @@ const CONFIG = {
 const MERCADO_PAGO_LINKS = {
     'Básico': {
         'monthly': { offer: 'https://mpago.la/2szXxjS', noOffer: 'https://mpago.la/1FjZRy4' },
-        'quarterly': { offer: 'https://mpago.la/1MscxRu', noOffer: 'https://mpago.la/1aTqt6T' },
-        'annual': { offer: '', noOffer: '' }
+        'quarterly': { offer: 'https://mpago.li/15B2yJQ', noOffer: 'https://mpago.li/2U6hqEp' },
+        'annual': { offer: 'https://mpago.li/12fsGL3', noOffer: 'https://mpago.li/2amGpcu' }
     },
     'Premium': {
         'monthly': { offer: 'https://mpago.la/29Ev7YQ', noOffer: 'https://mpago.la/2n7wiWi' },
-        'quarterly': { offer: 'https://mpago.la/2JifGyE', noOffer: 'https://mpago.la/2c9WGtq' },
-        'annual': { offer: '', noOffer: '' }
+        'quarterly': { offer: 'https://mpago.li/2zriJLH', noOffer: 'https://mpago.li/2aD61so' },
+        'annual': { offer: 'https://mpago.li/23f7cUH', noOffer: 'https://mpago.li/2YLsmmj' }
     },
     'Família': {
         'monthly': { offer: 'https://mpago.la/2pj1DGU', noOffer: 'https://mpago.la/2GPZBmo' },
-        'quarterly': { offer: 'https://mpago.la/2NNWdk3', noOffer: 'https://mpago.la/1YbhzvK' },
-        'annual': { offer: '', noOffer: '' }
+        'quarterly': { offer: 'https://mpago.li/1NHGDgJ', noOffer: 'https://mpago.li/2jYmrwz' },
+        'annual': { offer: 'https://mpago.li/2ybQkcP', noOffer: 'https://mpago.li/1bQ8Y51' }
     }
 };
 

@@ -132,9 +132,12 @@ function initDeviceModal() {
             STATE.selectedPlan = this.getAttribute('data-plan');
             STATE.selectedDevice = null;
 
-            deviceOptions.forEach(opt => opt.classList.remove('selected'));
-
-            deviceModal.classList.add('active');
+            if (STATE.selectedPlan === 'Teste Grátis') {
+                deviceOptions.forEach(opt => opt.classList.remove('selected'));
+                deviceModal.classList.add('active');
+            } else {
+                redirectToWhatsApp();
+            }
             return false;
         });
     });
@@ -153,12 +156,11 @@ function initDeviceModal() {
 }
 
 function redirectToWhatsApp() {
-    if (!STATE.selectedDevice) {
-        alert('Por favor, selecione um dispositivo');
-        return;
-    }
-
     if (STATE.selectedPlan === 'Teste Grátis' || STATE.selectedPlan === 'Suporte') {
+        if (!STATE.selectedDevice) {
+            alert('Por favor, selecione um dispositivo');
+            return;
+        }
         const message = buildWhatsAppMessage(STATE.selectedPlan, STATE.selectedDevice, STATE.selectedPeriod, STATE.offerExpired);
         const encodedMessage = encodeURIComponent(message);
         const whatsappUrl = `${CONFIG.WHATSAPP_BASE_URL}?phone=${CONFIG.WHATSAPP_NUMBER}&text=${encodedMessage}&type=phone_number&app_absent=0`;
