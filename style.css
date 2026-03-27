@@ -261,7 +261,7 @@ body {
 .section-title {
     font-size: 2.5rem;
     font-weight: 800;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
@@ -453,7 +453,7 @@ body {
 
 .savings-callout {
     background-color: #1a0a2e;
-    color: var(--bg-dark);
+    color: var(--primary-color);
     padding: 40px;
     border-radius: 15px;
     text-align: center;
