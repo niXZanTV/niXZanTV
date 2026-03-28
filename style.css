@@ -1346,6 +1346,43 @@ footer {
     margin-top: 20px;
 }
 
+.device-compatibility {
+    display: none;
+}
+
+.device-compatibility h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.device-compatibility p {
+    color: var(--text-secondary);
+    margin-bottom: 25px;
+    font-size: 1rem;
+}
+
+#compatibility-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.compatibility-brand {
+    background: rgba(255, 215, 0, 0.05);
+    border: 1px solid var(--border-color);
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+#continue-test-btn {
+    margin-top: 20px;
+}
+
 @keyframes fadeInModal {
     from { opacity: 0; }
     to { opacity: 1; }
