@@ -1,4 +1,37 @@
 // UI e interação de usuário
+const DEVICE_COMPATIBILITY = {
+    smarttv: {
+        title: "Smart TVs Compatíveis",
+        description: "O niXZan TV funciona perfeitamente nestas Smart TVs:",
+        brands: ["Samsung Tizen", "LG WebOS", "Sony Android TV", "TCL Android TV", "Philips Android TV", "Hisense", "Xiaomi", "AOC"]
+    },
+    tvbox: {
+        title: "TV Boxes Compatíveis",
+        description: "Compatível com todos os TV Boxes Android:",
+        brands: ["Android TV Box", "Fire TV Stick", "Fire TV Cube", "NVIDIA Shield", "Xiaomi Mi Box", "TCL Box", "Qualquer Android TV"]
+    },
+    smartphone: {
+        title: "Smartphones Compatíveis",
+        description: "Funciona em qualquer smartphone moderno:",
+        brands: ["Android (todas as versões)", "iPhone (iOS 12+)", "Samsung Galaxy", "iPhone", "Xiaomi", "Motorola", "Qualquer smartphone"]
+    },
+    tablet: {
+        title: "Tablets Compatíveis",
+        description: "Compatível com todos os tablets:",
+        brands: ["iPad", "Samsung Galaxy Tab", "Lenovo Tab", "Amazon Fire HD", "Xiaomi Pad", "Qualquer tablet Android/iOS"]
+    },
+    pc: {
+        title: "Computadores Compatíveis",
+        description: "Funciona em qualquer PC ou notebook:",
+        brands: ["Windows 10+", "macOS", "Linux", "Chromebook", "Qualquer computador moderno"]
+    },
+    roku: {
+        title: "Roku e Fire Stick Compatíveis",
+        description: "Compatível com dispositivos de streaming:",
+        brands: ["Roku Express", "Roku Stick", "Fire TV Stick", "Fire TV Stick Lite", "Fire TV Cube", "Todos os modelos Roku"]
+    }
+};
+
 function updatePricesAfterExpiry() {
     const activePlans = document.querySelector('.plans-grid:not(.expired-plans)');
     const expiredPlans = document.querySelector('.plans-grid.expired-plans');
@@ -111,12 +144,14 @@ function initDeviceModal() {
     const deviceOptions = document.querySelectorAll('.device-option');
     const planButtons = document.querySelectorAll('.plan-button');
     const periodButtons = document.querySelectorAll('.period-btn');
+    const continueTestBtn = document.getElementById('continue-test-btn');
 
     if (!deviceModal) return;
 
     deviceModal.addEventListener('click', function(e) {
         if (e.target === this) {
             this.classList.remove('active');
+            resetDeviceModal();
         }
     });
 
@@ -132,12 +167,13 @@ function initDeviceModal() {
             STATE.selectedPlan = this.getAttribute('data-plan');
             STATE.selectedDevice = null;
 
-            if (STATE.selectedPlan === 'Teste Grátis') {
-                deviceOptions.forEach(opt => opt.classList.remove('selected'));
-                deviceModal.classList.add('active');
-            } else {
-                redirectToWhatsApp();
-            }
+            // Todos os planos agora mostram o modal de dispositivo
+            deviceOptions.forEach(opt => opt.classList.remove('selected'));
+            deviceModal.classList.add('active');
+            document.querySelector('.device-modal-grid').style.display = 'grid';
+            document.querySelector('.device-compatibility').style.display = 'none';
+            document.querySelector('.device-modal-footer').style.display = 'block';
+            
             return false;
         });
     });
@@ -148,11 +184,53 @@ function initDeviceModal() {
             this.classList.add('selected');
             STATE.selectedDevice = this.getAttribute('data-device');
 
-            setTimeout(() => {
-                redirectToWhatsApp();
-            }, 300);
+            // Mostrar compatibilidade
+            showDeviceCompatibility(STATE.selectedDevice);
         });
     });
+
+    if (continueTestBtn) {
+        continueTestBtn.addEventListener('click', function() {
+            redirectToWhatsApp();
+        });
+    }
+}
+
+function showDeviceCompatibility(device) {
+    const compatibilityData = DEVICE_COMPATIBILITY[device];
+    if (!compatibilityData) return;
+
+    document.getElementById('compatibility-title').textContent = compatibilityData.title;
+    document.getElementById('compatibility-description').textContent = compatibilityData.description;
+
+    const listEl = document.getElementById('compatibility-list');
+    listEl.innerHTML = '';
+
+    compatibilityData.brands.forEach(brand => {
+        const brandEl = document.createElement('div');
+        brandEl.className = 'compatibility-brand';
+        brandEl.textContent = '✓ ' + brand;
+        listEl.appendChild(brandEl);
+    });
+
+    // Esconder grid e footer, mostrar compatibilidade
+    document.querySelector('.device-modal-grid').style.display = 'none';
+    document.querySelector('.device-modal-footer').style.display = 'none';
+    document.querySelector('.device-compatibility').style.display = 'block';
+
+    // Mudar o texto do botão dependendo do plano
+    const continueBtn = document.getElementById('continue-test-btn');
+    if (STATE.selectedPlan === 'Teste Grátis') {
+        continueBtn.textContent = 'Continuar para Teste Grátis';
+    } else {
+        continueBtn.textContent = 'Continuar para ' + STATE.selectedPlan;
+    }
+}
+
+function resetDeviceModal() {
+    document.querySelector('.device-modal-grid').style.display = 'grid';
+    document.querySelector('.device-compatibility').style.display = 'none';
+    document.querySelector('.device-modal-footer').style.display = 'block';
 }
 
 function redirectToWhatsApp() {
